@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <div class="loading" v-if="isLoading">
-      <div class="loading-spinner"></div>
-    </div>
+    <Loading v-if="isLoading" ></Loading>
 
     <h1 class="title">Weather App <span>made with Vue.js</span></h1>
     <div class="container-content">
@@ -23,8 +21,11 @@
 </template>
 
 <script>
+  import Loading from './components/Loading'
+
   const API_KEY = '0d17a64705c428f1d87a60d17fc424a0'
   const API_URI = `https://api.openweathermap.org/data/2.5/weather`
+
   const mountCoords = (navigator) => {
     return new Promise(resolve => {
       navigator.geolocation.getCurrentPosition(position => {
@@ -37,6 +38,9 @@
 
   export default {
     name: 'WeatherApp',
+    components:{
+      Loading
+    },
     data:() => ({
       isLoading: false,
       temp: {
@@ -73,27 +77,7 @@ body { width: 100%; height: 100%; font-family: Helvetica }
 .appear-enter, .appear-leave-to {
   transform: translateY(-10px);
 }
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-.loading {
-  position: absolute;
-  z-index: 9999;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  background-color: rgba(0, 0, 0, 0.8);
-  justify-content: center;
-  align-items: center;
-}
-.loading-spinner {
-  border: 8px solid rgb(255, 255, 255);
-  border-radius: 50%;
-  border-left-color: lightcoral;
-  width: 50px;
-  height: 50px;
-  animation: spin .2s linear infinite;
-}
+
 .container {
   width: 100%;
   height: 100%;
